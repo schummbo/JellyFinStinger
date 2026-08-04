@@ -14,7 +14,7 @@ Labels movies with whether they have a **stinger** — a mid-credits or post-cre
 ## Install
 
 1. In Jellyfin: **Dashboard → Plugins → Repositories → +** and add:
-   `https://raw.githubusercontent.com/OWNER/JellyFinStinger/main/manifest.json`
+   `https://raw.githubusercontent.com/schummbo/JellyFinStinger/main/manifest.json`
    *(replace `OWNER` with the GitHub user hosting this repo)*
 2. Install **Stinger** from the plugin catalog and restart Jellyfin.
 3. Run the **Scan movies for stingers** scheduled task once to analyze your existing library. From then on, new movies are picked up automatically as they're added, and the task also still runs daily as a safety net.
