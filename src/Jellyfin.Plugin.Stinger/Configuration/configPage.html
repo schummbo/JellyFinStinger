@@ -58,6 +58,10 @@
                         <input is="emby-checkbox" type="checkbox" id="ForceRescan" />
                         <span>Re-analyze every movie on the next scan (resets automatically)</span>
                     </label>
+                    <label class="checkboxContainer">
+                        <input is="emby-checkbox" type="checkbox" id="EnableAutoScanOnAdd" />
+                        <span>Scan a movie shortly after it's added to a library, instead of waiting for the daily scan</span>
+                    </label>
                 </div>
 
                 <div>
@@ -71,7 +75,7 @@
     <script type="text/javascript">
         (function () {
             var pluginId = "a8d7f2c4-1b3e-4c5a-9e6f-2d8b7a4c9e01";
-            var checkboxes = ["EnableSegments", "EnableOverviewText", "AddNoStingerOverview", "EnableNotification", "EnableWikipediaSource", "ForceRescan"];
+            var checkboxes = ["EnableSegments", "EnableOverviewText", "AddNoStingerOverview", "EnableNotification", "EnableWikipediaSource", "ForceRescan", "EnableAutoScanOnAdd"];
 
             document.querySelector('#StingerConfigPage').addEventListener('pageshow', function () {
                 Dashboard.showLoadingMsg();

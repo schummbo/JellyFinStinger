@@ -29,4 +29,7 @@ public class PluginConfiguration : BasePluginConfiguration
 
     /// <summary>When true, the next scan re-analyzes every movie, then resets itself.</summary>
     public bool ForceRescan { get; set; }
+
+    /// <summary>Scan a movie shortly after it's added to a library, instead of waiting for the daily scan.</summary>
+    public bool EnableAutoScanOnAdd { get; set; } = true;
 }

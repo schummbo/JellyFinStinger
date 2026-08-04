@@ -1,5 +1,6 @@
 using Jellyfin.Plugin.Stinger.Data;
 using Jellyfin.Plugin.Stinger.Detection;
+using Jellyfin.Plugin.Stinger.Library;
 using Jellyfin.Plugin.Stinger.Playback;
 using Jellyfin.Plugin.Stinger.Sources;
 using MediaBrowser.Controller;
@@ -16,6 +17,8 @@ public class PluginServiceRegistrator : IPluginServiceRegistrator
         serviceCollection.AddSingleton<FfmpegFeatureExtractor>();
         serviceCollection.AddSingleton<TmdbKeywordSource>();
         serviceCollection.AddSingleton<WikipediaListSource>();
+        serviceCollection.AddSingleton<StingerScanner>();
         serviceCollection.AddHostedService<StingerNotifier>();
+        serviceCollection.AddHostedService<StingerLibraryWatcher>();
     }
 }
