@@ -1,0 +1,17 @@
+name: "Stinger"
+guid: "a8d7f2c4-1b3e-4c5a-9e6f-2d8b7a4c9e01"
+version: "0.1.0.0"
+targetAbi: "10.10.0.0"
+framework: "net8.0"
+owner: "kschumm"
+overview: "Labels movies with mid- and post-credits scenes (stingers)"
+description: |
+  Detects stingers by analyzing the credits region of each movie with ffmpeg,
+  cross-checked against TMDB keywords and Wikipedia's post-credits list.
+  Writes credits media segments so skip-credits lands on the stinger, appends
+  an overview marker, and can notify clients to stay tuned during playback.
+category: "Metadata"
+artifacts:
+  - "Jellyfin.Plugin.Stinger.dll"
+changelog: |
+  - Initial release

@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Full history so we can commit the manifest back to main afterwards.
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Test
+        run: dotnet test tests/Jellyfin.Plugin.Stinger.Tests --configuration Release
+
+      - name: Install jprm
+        run: pip install jprm
+
+      - name: Resolve version from tag
+        id: version
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build plugin package
+        run: |
+          mkdir -p artifacts
+          jprm --verbosity=debug plugin build src/Jellyfin.Plugin.Stinger \
+            --output artifacts \
+            --version "${{ steps.version.outputs.version }}"
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*.zip
+          generate_release_notes: true
+
+      - name: Update plugin manifest on main
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout main
+          ZIP=$(ls artifacts/*.zip | head -n1)
+          ZIP_URL="https://github.com/${{ github.repository }}/releases/download/${GITHUB_REF_NAME}/$(basename "$ZIP")"
+          [ -f manifest.json ] || echo "[]" > manifest.json
+          jprm --verbosity=debug repo add --plugin-url "$ZIP_URL" ./manifest.json "$ZIP"
+          git add manifest.json
+          git commit -m "Update manifest for ${GITHUB_REF_NAME}"
+          git push origin main

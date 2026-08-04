@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Jellyfin.Plugin.Stinger/Jellyfin.Plugin.Stinger.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Jellyfin.Plugin.Stinger.Tests/Jellyfin.Plugin.Stinger.Tests.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Stinger</title>
+</head>
+<body>
+<div id="StingerConfigPage" data-role="page" class="page type-interior pluginConfigurationPage" data-require="emby-input,emby-button,emby-checkbox">
+    <div data-role="content">
+        <div class="content-primary">
+            <form id="StingerConfigForm">
+                <div class="verticalSection">
+                    <h2 class="sectionTitle">Stinger</h2>
+                    <p>Detects mid- and post-credits scenes by analyzing each movie's credits, cross-checked against TMDB and Wikipedia. Run the "Scan movies for stingers" scheduled task to analyze your library.</p>
+                </div>
+
+                <div class="verticalSection">
+                    <h3 class="sectionTitle">Labeling</h3>
+                    <label class="checkboxContainer">
+                        <input is="emby-checkbox" type="checkbox" id="EnableSegments" />
+                        <span>Write credits media segments (skip-credits lands on the stinger)</span>
+                    </label>
+                    <label class="checkboxContainer">
+                        <input is="emby-checkbox" type="checkbox" id="EnableOverviewText" />
+                        <span>Append a 🎬 marker line to movie overviews</span>
+                    </label>
+                    <label class="checkboxContainer">
+                        <input is="emby-checkbox" type="checkbox" id="AddNoStingerOverview" />
+                        <span>Also mark confirmed no-stinger movies in the overview</span>
+                    </label>
+                    <label class="checkboxContainer">
+                        <input is="emby-checkbox" type="checkbox" id="EnableNotification" />
+                        <span>Show a "stay tuned" message on clients when the credits start</span>
+                    </label>
+                    <div class="inputContainer">
+                        <input is="emby-input" type="text" id="NotificationText" label="Notification text" />
+                    </div>
+                </div>
+
+                <div class="verticalSection">
+                    <h3 class="sectionTitle">Sources</h3>
+                    <div class="inputContainer">
+                        <input is="emby-input" type="text" id="TmdbApiKey" label="TMDB API key (optional cross-check)" />
+                        <div class="fieldDescription">Leave empty to disable the TMDB keyword source.</div>
+                    </div>
+                    <label class="checkboxContainer">
+                        <input is="emby-checkbox" type="checkbox" id="EnableWikipediaSource" />
+                        <span>Cross-check against Wikipedia's post-credits list (auto-refreshed weekly)</span>
+                    </label>
+                </div>
+
+                <div class="verticalSection">
+                    <h3 class="sectionTitle">Analysis</h3>
+                    <div class="inputContainer">
+                        <input is="emby-input" type="number" id="TailWindowMinutes" label="Minutes from the end of the file to analyze" min="5" max="40" />
+                    </div>
+                    <label class="checkboxContainer">
+                        <input is="emby-checkbox" type="checkbox" id="ForceRescan" />
+                        <span>Re-analyze every movie on the next scan (resets automatically)</span>
+                    </label>
+                </div>
+
+                <div>
+                    <button is="emby-button" type="submit" class="raised button-submit block emby-button">
+                        <span>Save</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        (function () {
+            var pluginId = "a8d7f2c4-1b3e-4c5a-9e6f-2d8b7a4c9e01";
+            var checkboxes = ["EnableSegments", "EnableOverviewText", "AddNoStingerOverview", "EnableNotification", "EnableWikipediaSource", "ForceRescan"];
+
+            document.querySelector('#StingerConfigPage').addEventListener('pageshow', function () {
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(pluginId).then(function (config) {
+                    document.querySelector('#TmdbApiKey').value = config.TmdbApiKey || '';
+                    document.querySelector('#NotificationText').value = config.NotificationText || '';
+                    document.querySelector('#TailWindowMinutes').value = config.TailWindowMinutes || 15;
+                    checkboxes.forEach(function (id) {
+                        document.querySelector('#' + id).checked = !!config[id];
+                    });
+                    Dashboard.hideLoadingMsg();
+                });
+            });
+
+            document.querySelector('#StingerConfigForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+                Dashboard.showLoadingMsg();
+                ApiClient.getPluginConfiguration(pluginId).then(function (config) {
+                    config.TmdbApiKey = document.querySelector('#TmdbApiKey').value;
+                    config.NotificationText = document.querySelector('#NotificationText').value;
+                    config.TailWindowMinutes = parseInt(document.querySelector('#TailWindowMinutes').value, 10) || 15;
+                    checkboxes.forEach(function (id) {
+                        config[id] = document.querySelector('#' + id).checked;
+                    });
+                    ApiClient.updatePluginConfiguration(pluginId, config).then(function (result) {
+                        Dashboard.processPluginConfigurationUpdateResult(result);
+                    });
+                });
+                return false;
+            });
+        })();
+    </script>
+</div>
+</body>
+</html>
