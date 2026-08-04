@@ -1,6 +1,6 @@
 name: "Stinger"
 guid: "a8d7f2c4-1b3e-4c5a-9e6f-2d8b7a4c9e01"
-version: "1.0.4.0"
+version: "1.0.5.0"
 targetAbi: "10.11.0.0"
 framework: "net9.0"
 owner: "kschumm"
@@ -11,6 +11,7 @@ description: |
   Writes credits media segments so skip-credits lands on the stinger, appends
   an overview marker, and can notify clients to stay tuned during playback.
 category: "Metadata"
+image: "image.png"
 artifacts:
   - "Jellyfin.Plugin.Stinger.dll"
 changelog: |
@@ -19,3 +20,4 @@ changelog: |
   - 1.0.2: Target Jellyfin 10.11 / net9.0 (IMediaSegmentManager moved namespace, MediaSegmentType moved to Jellyfin.Database.Implementations.Enums, TaskTriggerInfo.Type is now an enum)
   - 1.0.3: Scan a movie shortly after it's added to a library, instead of waiting for the daily scan (toggle in settings)
   - 1.0.4: Overview marker now reads "Stingers: ..." for clarity (existing movies need a force rescan to pick up the new wording)
+  - 1.0.5: Add a plugin catalog image
