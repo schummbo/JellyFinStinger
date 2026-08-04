@@ -1,6 +1,6 @@
 name: "Stinger"
 guid: "a8d7f2c4-1b3e-4c5a-9e6f-2d8b7a4c9e01"
-version: "0.1.0.0"
+version: "1.0.1.0"
 targetAbi: "10.10.0.0"
 framework: "net8.0"
 owner: "kschumm"
@@ -15,3 +15,4 @@ artifacts:
   - "Jellyfin.Plugin.Stinger.dll"
 changelog: |
   - Initial release
+  - 1.0.1: Version bump, no functional changes
