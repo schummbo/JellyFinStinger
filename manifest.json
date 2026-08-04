@@ -1,0 +1,20 @@
+[
+    {
+        "guid": "a8d7f2c4-1b3e-4c5a-9e6f-2d8b7a4c9e01",
+        "name": "Stinger",
+        "description": "Detects stingers by analyzing the credits region of each movie with ffmpeg,\ncross-checked against TMDB keywords and Wikipedia's post-credits list.\nWrites credits media segments so skip-credits lands on the stinger, appends\nan overview marker, and can notify clients to stay tuned during playback.\n",
+        "overview": "Labels movies with mid- and post-credits scenes (stingers)",
+        "owner": "kschumm",
+        "category": "Metadata",
+        "versions": [
+            {
+                "version": "0.1.0.0",
+                "changelog": "- Initial release\n",
+                "targetAbi": "10.10.0.0",
+                "sourceUrl": "https://github.com/schummbo/JellyFinStinger/releases/download/v0.1.0/stinger_0.1.0.0.zip",
+                "checksum": "187379379d656044a97fc75e5a3ae8a0",
+                "timestamp": "2026-08-04T03:21:27Z"
+            }
+        ]
+    }
+]
