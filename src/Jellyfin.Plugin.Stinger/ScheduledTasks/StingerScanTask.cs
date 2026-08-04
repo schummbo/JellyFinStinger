@@ -1,4 +1,5 @@
 using Jellyfin.Data.Enums;
+using Jellyfin.Database.Implementations.Enums;
 using Jellyfin.Plugin.Stinger.Data;
 using Jellyfin.Plugin.Stinger.Detection;
 using Jellyfin.Plugin.Stinger.Model;
@@ -6,6 +7,7 @@ using Jellyfin.Plugin.Stinger.Sources;
 using MediaBrowser.Controller.Entities;
 using MediaBrowser.Controller.Entities.Movies;
 using MediaBrowser.Controller.Library;
+using MediaBrowser.Controller.MediaSegments;
 using MediaBrowser.Controller;
 using MediaBrowser.Model.Entities;
 using MediaBrowser.Model.MediaSegments;
@@ -56,7 +58,7 @@ public class StingerScanTask : IScheduledTask
     {
         yield return new TaskTriggerInfo
         {
-            Type = TaskTriggerInfo.TriggerInterval,
+            Type = TaskTriggerInfoType.IntervalTrigger,
             IntervalTicks = TimeSpan.FromHours(24).Ticks,
         };
     }

@@ -1,8 +1,8 @@
 name: "Stinger"
 guid: "a8d7f2c4-1b3e-4c5a-9e6f-2d8b7a4c9e01"
-version: "1.0.1.0"
-targetAbi: "10.10.0.0"
-framework: "net8.0"
+version: "1.0.2.0"
+targetAbi: "10.11.0.0"
+framework: "net9.0"
 owner: "kschumm"
 overview: "Labels movies with mid- and post-credits scenes (stingers)"
 description: |
@@ -16,3 +16,4 @@ artifacts:
 changelog: |
   - Initial release
   - 1.0.1: Version bump, no functional changes
+  - 1.0.2: Target Jellyfin 10.11 / net9.0 (IMediaSegmentManager moved namespace, MediaSegmentType moved to Jellyfin.Database.Implementations.Enums, TaskTriggerInfo.Type is now an enum)
