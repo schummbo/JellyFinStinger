@@ -15,16 +15,20 @@ public static class OverviewMarker
         "🎬 Post-credits scene",
         "🎬 Mid- and post-credits scenes",
         "🎬 No scene during or after the credits",
+        "🎬 Stingers: Mid-credits scene",
+        "🎬 Stingers: Post-credits scene",
+        "🎬 Stingers: Mid- and post-credits scenes",
+        "🎬 Stingers: No scene during or after the credits",
     };
 
     public static string? BuildMarker(StingerResult result, bool addNoStinger)
     {
         return result.State switch
         {
-            StingerState.HasStinger when result.HasMidCredits && result.HasPostCredits => KnownMarkers[2],
-            StingerState.HasStinger when result.HasMidCredits => KnownMarkers[0],
-            StingerState.HasStinger => KnownMarkers[1],
-            StingerState.NoStinger when addNoStinger => KnownMarkers[3],
+            StingerState.HasStinger when result.HasMidCredits && result.HasPostCredits => KnownMarkers[6],
+            StingerState.HasStinger when result.HasMidCredits => KnownMarkers[4],
+            StingerState.HasStinger => KnownMarkers[5],
+            StingerState.NoStinger when addNoStinger => KnownMarkers[7],
             _ => null,
         };
     }

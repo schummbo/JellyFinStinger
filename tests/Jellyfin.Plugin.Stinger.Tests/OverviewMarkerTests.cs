@@ -18,8 +18,8 @@ public class OverviewMarkerTests
     {
         var marker = OverviewMarker.BuildMarker(Result(StingerState.HasStinger, post: true), false);
 
-        Assert.Equal("🎬 Post-credits scene", marker);
-        Assert.Equal("A movie.\n\n🎬 Post-credits scene", OverviewMarker.Apply("A movie.", marker));
+        Assert.Equal("🎬 Stingers: Post-credits scene", marker);
+        Assert.Equal("A movie.\n\n🎬 Stingers: Post-credits scene", OverviewMarker.Apply("A movie.", marker));
     }
 
     [Fact]
@@ -35,15 +35,15 @@ public class OverviewMarkerTests
     public void ReplacesStaleMarker()
     {
         var old = OverviewMarker.Apply("A movie.", "🎬 Mid-credits scene")!;
-        var updated = OverviewMarker.Apply(old, "🎬 Post-credits scene");
+        var updated = OverviewMarker.Apply(old, "🎬 Stingers: Post-credits scene");
 
-        Assert.Equal("A movie.\n\n🎬 Post-credits scene", updated);
+        Assert.Equal("A movie.\n\n🎬 Stingers: Post-credits scene", updated);
     }
 
     [Fact]
     public void RemovesMarkerWhenResultBecomesNone()
     {
-        var old = OverviewMarker.Apply("A movie.", "🎬 Post-credits scene")!;
+        var old = OverviewMarker.Apply("A movie.", "🎬 Stingers: Post-credits scene")!;
 
         Assert.Equal("A movie.", OverviewMarker.Apply(old, null));
     }
@@ -58,14 +58,14 @@ public class OverviewMarkerTests
     public void NoStinger_MarkerOnlyWhenOptedIn()
     {
         Assert.Null(OverviewMarker.BuildMarker(Result(StingerState.NoStinger), addNoStinger: false));
-        Assert.Equal("🎬 No scene during or after the credits", OverviewMarker.BuildMarker(Result(StingerState.NoStinger), addNoStinger: true));
+        Assert.Equal("🎬 Stingers: No scene during or after the credits", OverviewMarker.BuildMarker(Result(StingerState.NoStinger), addNoStinger: true));
     }
 
     [Fact]
     public void BothKinds_CombinedMarker()
     {
         Assert.Equal(
-            "🎬 Mid- and post-credits scenes",
+            "🎬 Stingers: Mid- and post-credits scenes",
             OverviewMarker.BuildMarker(Result(StingerState.HasStinger, mid: true, post: true), false));
     }
 }
