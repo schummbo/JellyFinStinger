@@ -7,7 +7,7 @@
         "owner": "kschumm",
         "category": "Metadata",
         "image": "image.png",
-        "imageUrl": "/stinger/image.png",
+        "imageUrl": "https://raw.githubusercontent.com/schummbo/JellyFinStinger/main/stinger/image.png",
         "versions": [
             {
                 "version": "1.0.5.0",

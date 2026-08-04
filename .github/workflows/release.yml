@@ -54,8 +54,9 @@ jobs:
           git checkout main
           ZIP=$(ls artifacts/*.zip | head -n1)
           ZIP_URL="https://github.com/${{ github.repository }}/releases/download/${GITHUB_REF_NAME}/$(basename "$ZIP")"
+          REPO_URL="https://raw.githubusercontent.com/${{ github.repository }}/main"
           [ -f manifest.json ] || echo "[]" > manifest.json
-          jprm --verbosity=debug repo add --plugin-url "$ZIP_URL" ./manifest.json "$ZIP"
-          git add manifest.json
+          jprm --verbosity=debug repo add --url "$REPO_URL" --plugin-url "$ZIP_URL" ./manifest.json "$ZIP"
+          git add manifest.json stinger/
           git commit -m "Update manifest for ${GITHUB_REF_NAME}"
           git push origin main
