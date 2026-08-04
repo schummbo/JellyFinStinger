@@ -9,6 +9,7 @@ Labels movies with whether they have a **stinger** — a mid-credits or post-cre
 - **Overview marker.** Appends a line like `🎬 Mid- and post-credits scenes` to the movie overview (idempotent, removable, optional).
 - **Playback notification.** Sends a "stay tuned" message to the playing client when the credits start (optional).
 - **Three-state results.** *Has stinger* / *no stinger* (affirmed by clean detection) / *unknown* (stylized credits, credits over footage, source disagreement). External sources can affirm presence but never absence — if detection says no and TMDB/Wikipedia say yes, the movie is marked unknown rather than wrong.
+- **Scans new movies automatically.** Once a library has had its initial scan, newly added movies are analyzed a few minutes after they land (optional) — no need to wait for the daily sweep.
 
 ## Install
 
@@ -16,9 +17,9 @@ Labels movies with whether they have a **stinger** — a mid-credits or post-cre
    `https://raw.githubusercontent.com/OWNER/JellyFinStinger/main/manifest.json`
    *(replace `OWNER` with the GitHub user hosting this repo)*
 2. Install **Stinger** from the plugin catalog and restart Jellyfin.
-3. Run the **Scan movies for stingers** scheduled task (it also runs daily on its own).
+3. Run the **Scan movies for stingers** scheduled task once to analyze your existing library. From then on, new movies are picked up automatically as they're added, and the task also still runs daily as a safety net.
 
-Requires Jellyfin **10.10+**.
+Requires Jellyfin **10.11+**.
 
 ## Configuration
 
@@ -33,6 +34,7 @@ Requires Jellyfin **10.10+**.
 | Stay-tuned notification | on | Message shown when playback reaches the credits |
 | Tail window | 15 min | How much of the end of each file is analyzed |
 | Force rescan | off | One-shot: next scan re-analyzes everything |
+| Scan on add | on | Analyze a movie ~3 min after it's added to a library, instead of waiting for the daily scan |
 
 ## How detection works
 
